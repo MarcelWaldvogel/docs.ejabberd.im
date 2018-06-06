@@ -1032,9 +1032,19 @@ These are the specific options:
 **`extauth_program: PathToScript`**:   Indicate in this option the full path to the external authentication
 	script. The script must be executable by ejabberd.
 
-**`extauth_instances: Integer`**:   Indicate how many instances of the script to run simultaneously to
-	serve authentication in the virtual host. The default value is the
-	minimum number: 1.
+**`extauth_pool_name: String`**:   Indicate the name of the pool
+	from which extauth processes should be used. By default,
+	each host has its own pool. Set this variable to the same
+	string for multiple host which should share the same pool.
+	Sharing obvioulsy only makes sense if all hosts share the
+	same `extauth_program`.
+
+**`extauth_pool_size: Integer`**:   Indicate how many instances of the
+	script to run simultaneously to
+	serve authentication in the pool. On older versions, the default value
+	is the minimum number, 1; on newer versions (Q2 2018), it tries
+	to default to running one per logical processor in the system.
+	(This option was formerly named `extauth_instances`, but this name is now deprecated.)
 
 **`auth_use_cache: false|true`**:   Starting in *ejabberd 17.06*, caching has received a complete overhaul.
 	Instead of `extauth_cache`, a set of new variables describes cache
